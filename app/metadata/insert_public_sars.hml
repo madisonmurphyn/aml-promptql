@@ -1,0 +1,111 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: public_sars_insert_input
+  description: Input type for inserting into public.sars
+  fields:
+    - name: customer_id
+      type: int_32
+      description: New value for public.sars.customer_id
+    - name: filed_date
+      type: timestamp
+      description: New value for public.sars.filed_date
+    - name: reason
+      type: string
+      description: New value for public.sars.reason
+    - name: sar_id
+      type: int_32!
+      description: New value for public.sars.sar_id
+    - name: status
+      type: string
+      description: New value for public.sars.status
+    - name: transaction_id
+      type: int_32
+      description: New value for public.sars.transaction_id
+  graphql:
+    typeName: public_sars_insert_input
+    inputTypeName: public_sars_insert_input_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mypostgres_promptql
+      dataConnectorObjectType: public.sars_insert_input
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: public_sars_insert_input
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - customer_id
+          - filed_date
+          - reason
+          - sar_id
+          - status
+          - transaction_id
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: insert_public_sars_result
+  description: insert from public.sars result
+  fields:
+    - name: affected_rows
+      type: int_32!
+      description: Number of affected rows
+    - name: returning
+      type: "[public_sars!]!"
+      description: Objects that were affected by insert
+  graphql:
+    typeName: insert_public_sars_result
+    inputTypeName: insert_public_sars_result_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mypostgres_promptql
+      dataConnectorObjectType: insert_public.sars_result
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: insert_public_sars_result
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affected_rows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: insert_public_sars
+  outputType: insert_public_sars_result!
+  arguments:
+    - name: objects
+      type: "[public_sars_insert_input!]!"
+      description: Objects to insert
+    - name: returning
+      type: "[string!]"
+      description: Fields to return
+  source:
+    dataConnectorName: mypostgres_promptql
+    dataConnectorCommand:
+      procedure: insert_public.sars
+  graphql:
+    rootFieldName: insert_public_sars
+    rootFieldKind: Mutation
+  description: Insert into public.sars
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: insert_public_sars
+  permissions:
+    - role: admin
+      allowExecution: true
+

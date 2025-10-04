@@ -1,0 +1,123 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: bulk_check_summary
+  fields:
+    - name: clear
+      type: Float!
+    - name: critical
+      type: Float!
+    - name: unknown
+      type: Float!
+  graphql:
+    typeName: bulk_check_summary
+    inputTypeName: bulk_check_summary_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: typescript
+      dataConnectorObjectType: BulkCheckSummary
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: bulk_check_summary
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - clear
+          - critical
+          - unknown
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: bulk_check_response
+  fields:
+    - name: error
+      type: String
+    - name: flagged_count
+      type: Float!
+    - name: results
+      type: "[customer_check_response!]!"
+    - name: success
+      type: Boolean!
+    - name: summary
+      type: bulk_check_summary!
+    - name: total_checked
+      type: Float!
+  graphql:
+    typeName: bulk_check_response
+    inputTypeName: bulk_check_response_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: typescript
+      dataConnectorObjectType: BulkCheckResponse
+      fieldMapping:
+        error:
+          column:
+            name: error
+        flagged_count:
+          column:
+            name: flaggedCount
+        results:
+          column:
+            name: results
+        success:
+          column:
+            name: success
+        summary:
+          column:
+            name: summary
+        total_checked:
+          column:
+            name: totalChecked
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: bulk_check_response
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - error
+          - flagged_count
+          - results
+          - success
+          - summary
+          - total_checked
+
+---
+kind: Command
+version: v1
+definition:
+  name: bulk_check_sdn
+  outputType: bulk_check_response!
+  arguments:
+    - name: customer_names
+      type: "[String!]!"
+  source:
+    dataConnectorName: typescript
+    dataConnectorCommand:
+      procedure: bulkCheckSdn
+    argumentMapping:
+      customer_names: customerNames
+  graphql:
+    rootFieldName: bulk_check_sdn
+    rootFieldKind: Mutation
+  description: |-
+    Bulk check multiple customers against SDN list
+    Efficient for batch processing of customer base
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: bulk_check_sdn
+  permissions:
+    - role: admin
+      allowExecution: true
+

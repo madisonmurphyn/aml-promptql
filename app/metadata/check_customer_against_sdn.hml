@@ -1,0 +1,94 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: customer_check_response
+  fields:
+    - name: customer_name
+      type: String!
+    - name: error
+      type: String
+    - name: is_sdn
+      type: Boolean
+    - name: match_count
+      type: Float!
+    - name: matches
+      type: "[sdn_record!]!"
+    - name: risk_level
+      type: String!
+  graphql:
+    typeName: customer_check_response
+    inputTypeName: customer_check_response_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: typescript
+      dataConnectorObjectType: CustomerCheckResponse
+      fieldMapping:
+        customer_name:
+          column:
+            name: customerName
+        error:
+          column:
+            name: error
+        is_sdn:
+          column:
+            name: isSDN
+        match_count:
+          column:
+            name: matchCount
+        matches:
+          column:
+            name: matches
+        risk_level:
+          column:
+            name: riskLevel
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: customer_check_response
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - customer_name
+          - error
+          - is_sdn
+          - match_count
+          - matches
+          - risk_level
+
+---
+kind: Command
+version: v1
+definition:
+  name: check_customer_against_sdn
+  outputType: customer_check_response!
+  arguments:
+    - name: customer_name
+      type: String!
+    - name: fuzzy_match
+      type: Boolean!
+  source:
+    dataConnectorName: typescript
+    dataConnectorCommand:
+      procedure: checkCustomerAgainstSdn
+    argumentMapping:
+      customer_name: customerName
+      fuzzy_match: fuzzyMatch
+  graphql:
+    rootFieldName: check_customer_against_sdn
+    rootFieldKind: Mutation
+  description: |-
+    Check if a customer name matches any SDN entries
+    Useful for real-time compliance checks during transaction processing
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: check_customer_against_sdn
+  permissions:
+    - role: admin
+      allowExecution: true
+

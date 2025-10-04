@@ -1,0 +1,63 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: delete_public_sars_result
+  description: delete from public.sars result
+  fields:
+    - name: affected_rows
+      type: int_32!
+      description: Number of affected rows
+    - name: returning
+      type: "[public_sars!]!"
+      description: Objects that were affected by delete
+  graphql:
+    typeName: delete_public_sars_result
+    inputTypeName: delete_public_sars_result_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mypostgres_promptql
+      dataConnectorObjectType: delete_public.sars_result
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: delete_public_sars_result
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affected_rows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: delete_public_sars
+  outputType: delete_public_sars_result!
+  arguments:
+    - name: returning
+      type: "[string!]"
+      description: Fields to return
+    - name: where
+      type: public_sars_bool_exp!
+      description: Filter for rows to delete
+  source:
+    dataConnectorName: mypostgres_promptql
+    dataConnectorCommand:
+      procedure: delete_public.sars
+  graphql:
+    rootFieldName: delete_public_sars
+    rootFieldKind: Mutation
+  description: Delete from public.sars
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: delete_public_sars
+  permissions:
+    - role: admin
+      allowExecution: true
+

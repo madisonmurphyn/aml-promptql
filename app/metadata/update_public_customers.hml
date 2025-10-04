@@ -1,0 +1,266 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: integer_set_input
+  description: Wrapper for setting scalar integer
+  fields:
+    - name: value
+      type: int_32
+      description: New value for scalar integer
+  graphql:
+    typeName: integer_set_input
+    inputTypeName: integer_set_input_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mypostgres_promptql
+      dataConnectorObjectType: integer_set_input
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: integer_set_input
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - value
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: text_set_input
+  description: Wrapper for setting scalar text
+  fields:
+    - name: value
+      type: string
+      description: New value for scalar text
+  graphql:
+    typeName: text_set_input
+    inputTypeName: text_set_input_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mypostgres_promptql
+      dataConnectorObjectType: text_set_input
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: text_set_input
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - value
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: boolean_set_input
+  description: Wrapper for setting scalar boolean
+  fields:
+    - name: value
+      type: boolean
+      description: New value for scalar boolean
+  graphql:
+    typeName: boolean_set_input
+    inputTypeName: boolean_set_input_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mypostgres_promptql
+      dataConnectorObjectType: boolean_set_input
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: boolean_set_input
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - value
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: date_set_input
+  description: Wrapper for setting scalar date
+  fields:
+    - name: value
+      type: date
+      description: New value for scalar date
+  graphql:
+    typeName: date_set_input
+    inputTypeName: date_set_input_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mypostgres_promptql
+      dataConnectorObjectType: date_set_input
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: date_set_input
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - value
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: character_varying_set_input
+  description: Wrapper for setting scalar character_varying
+  fields:
+    - name: value
+      type: string
+      description: New value for scalar character_varying
+  graphql:
+    typeName: character_varying_set_input
+    inputTypeName: character_varying_set_input_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mypostgres_promptql
+      dataConnectorObjectType: character_varying_set_input
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: character_varying_set_input
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - value
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: public_customers_set_input
+  description: Input type for updating public.customers
+  fields:
+    - name: account
+      type: integer_set_input
+      description: New value wrapper for public.customers.account
+    - name: address
+      type: text_set_input
+      description: New value wrapper for public.customers.address
+    - name: blacklisted
+      type: boolean_set_input
+      description: New value wrapper for public.customers.blacklisted
+    - name: customer_id
+      type: integer_set_input
+      description: New value wrapper for public.customers.customer_id
+    - name: dob
+      type: date_set_input
+      description: New value wrapper for public.customers.dob
+    - name: name
+      type: character_varying_set_input
+      description: New value wrapper for public.customers.name
+    - name: nationality
+      type: character_varying_set_input
+      description: New value wrapper for public.customers.nationality
+    - name: pep_status
+      type: boolean_set_input
+      description: New value wrapper for public.customers.pep_status
+    - name: risk_level
+      type: character_varying_set_input
+      description: New value wrapper for public.customers.risk_level
+  graphql:
+    typeName: public_customers_set_input
+    inputTypeName: public_customers_set_input_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mypostgres_promptql
+      dataConnectorObjectType: public.customers_set_input
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: public_customers_set_input
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - account
+          - address
+          - blacklisted
+          - customer_id
+          - dob
+          - name
+          - nationality
+          - pep_status
+          - risk_level
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: update_public_customers_result
+  description: update from public.customers result
+  fields:
+    - name: affected_rows
+      type: int_32!
+      description: Number of affected rows
+    - name: returning
+      type: "[public_customers!]!"
+      description: Objects that were affected by update
+  graphql:
+    typeName: update_public_customers_result
+    inputTypeName: update_public_customers_result_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mypostgres_promptql
+      dataConnectorObjectType: update_public.customers_result
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: update_public_customers_result
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affected_rows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: update_public_customers
+  outputType: update_public_customers_result!
+  arguments:
+    - name: returning
+      type: "[string!]"
+      description: Fields to return
+    - name: set
+      type: public_customers_set_input!
+      description: Values to set
+    - name: where
+      type: public_customers_bool_exp!
+      description: Filter for rows to update
+  source:
+    dataConnectorName: mypostgres_promptql
+    dataConnectorCommand:
+      procedure: update_public.customers
+  graphql:
+    rootFieldName: update_public_customers
+    rootFieldKind: Mutation
+  description: Update public.customers
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: update_public_customers
+  permissions:
+    - role: admin
+      allowExecution: true
+

@@ -1,0 +1,467 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: aml_cases_aml_flags_pattern_metadata
+  description: Metadata about AML flag patterns
+  fields:
+    - name: avoidance_percentage
+      description: Percentage of avoidance
+      type: float_64
+    - name: business_type
+      description: Type of business
+      type: String
+    - name: chain_length
+      description: Length of the blockchain used in chain-hopping
+      type: Int
+    - name: hop_number
+      description: Number of hops used in chain-hopping
+      type: Int
+    - name: monthly_volume
+      type: float_64
+      description: Monthly transaction volume
+    - name: network_id
+      type: Int
+      description: Identifier for the network
+    - name: pattern_id
+      type: Int
+      description: Identifier for the pattern
+    - name: pattern_type
+      type: String
+      description: Type of pattern detected
+    - name: threshold_avoided
+      type: Int
+      description: Amount of threshold avoided
+  graphql:
+    typeName: aml_cases_aml_flags_pattern_metadata
+    inputTypeName: aml_cases_aml_flags_pattern_metadata_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mymongodb
+      dataConnectorObjectType: aml_cases_aml_flags_pattern_metadata
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: aml_cases_aml_flags_pattern_metadata
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - avoidance_percentage
+          - business_type
+          - chain_length
+          - hop_number
+          - monthly_volume
+          - network_id
+          - pattern_id
+          - pattern_type
+          - threshold_avoided
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: aml_cases_aml_flags
+  description: AML flags associated with a case
+  fields:
+    - name: cross_border
+      type: boolean
+      description: Indicates if the transaction is cross-border
+    - name: darknet
+      type: boolean
+      description: Indicates if the transaction is related to darknet activities
+    - name: pattern_metadata
+      type: aml_cases_aml_flags_pattern_metadata
+      description: Metadata about AML flag patterns
+    - name: structuring
+      type: boolean
+      description: Indicates if the transaction involves structuring
+  graphql:
+    typeName: aml_cases_aml_flags
+    inputTypeName: aml_cases_aml_flags_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mymongodb
+      dataConnectorObjectType: aml_cases_aml_flags
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: aml_cases_aml_flags
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - cross_border
+          - darknet
+          - pattern_metadata
+          - structuring
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: aml_cases
+  description: AML cases information
+  fields:
+    - name: id
+      type: string!
+      description: Unique identifier for the AML case
+    - name: aml_flags
+      type: aml_cases_aml_flags
+      description: AML flags associated with the case
+    - name: amount
+      type: float_64
+      description: Transaction amount
+    - name: beneficiary_address
+      type: String
+      description: Address of the beneficiary
+    - name: beneficiary_id
+      type: Int
+      description: Identifier for the beneficiary
+    - name: beneficiary_name
+      type: String
+      description: Name of the beneficiary
+    - name: originator_address
+      type: String
+      description: Address of the originator
+    - name: originator_id
+      type: Int
+      description: Identifier for the originator
+    - name: originator_name
+      type: String
+      description: Name of the originator
+    - name: transaction_date
+      type: String
+      description: Date of the transaction
+    - name: transaction_id
+      type: Int
+      description: Identifier for the transaction
+  graphql:
+    typeName: aml_cases
+    inputTypeName: aml_cases_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mymongodb
+      dataConnectorObjectType: aml_cases
+      fieldMapping:
+        id:
+          column:
+            name: _id
+        aml_flags:
+          column:
+            name: aml_flags
+        amount:
+          column:
+            name: amount
+        beneficiary_address:
+          column:
+            name: beneficiary_address
+        beneficiary_id:
+          column:
+            name: beneficiary_id
+        beneficiary_name:
+          column:
+            name: beneficiary_name
+        originator_address:
+          column:
+            name: originator_address
+        originator_id:
+          column:
+            name: originator_id
+        originator_name:
+          column:
+            name: originator_name
+        transaction_date:
+          column:
+            name: transaction_date
+        transaction_id:
+          column:
+            name: transaction_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: aml_cases
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - id
+          - aml_flags
+          - amount
+          - beneficiary_address
+          - beneficiary_id
+          - beneficiary_name
+          - originator_address
+          - originator_id
+          - originator_name
+          - transaction_date
+          - transaction_id
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: aml_cases_aml_flags_pattern_metadata_bool_exp
+  operand:
+    object:
+      type: aml_cases_aml_flags_pattern_metadata
+      comparableFields:
+        - fieldName: avoidance_percentage
+          booleanExpressionType: double_bool_exp
+        - fieldName: business_type
+          booleanExpressionType: string_bool_exp
+        - fieldName: chain_length
+          booleanExpressionType: int_bool_exp
+        - fieldName: hop_number
+          booleanExpressionType: int_bool_exp
+        - fieldName: monthly_volume
+          booleanExpressionType: double_bool_exp
+        - fieldName: network_id
+          booleanExpressionType: int_bool_exp
+        - fieldName: pattern_id
+          booleanExpressionType: int_bool_exp
+        - fieldName: pattern_type
+          booleanExpressionType: string_bool_exp
+        - fieldName: threshold_avoided
+          booleanExpressionType: int_bool_exp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: aml_cases_aml_flags_pattern_metadata_bool_exp
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: aml_cases_aml_flags_bool_exp
+  operand:
+    object:
+      type: aml_cases_aml_flags
+      comparableFields:
+        - fieldName: cross_border
+          booleanExpressionType: bool_bool_exp
+        - fieldName: darknet
+          booleanExpressionType: bool_bool_exp
+        - fieldName: pattern_metadata
+          booleanExpressionType: aml_cases_aml_flags_pattern_metadata_bool_exp
+        - fieldName: structuring
+          booleanExpressionType: bool_bool_exp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: aml_cases_aml_flags_bool_exp
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: aml_cases_bool_exp
+  operand:
+    object:
+      type: aml_cases
+      comparableFields:
+        - fieldName: id
+          booleanExpressionType: object_id_bool_exp
+        - fieldName: aml_flags
+          booleanExpressionType: aml_cases_aml_flags_bool_exp
+        - fieldName: amount
+          booleanExpressionType: double_bool_exp
+        - fieldName: beneficiary_address
+          booleanExpressionType: string_bool_exp
+        - fieldName: beneficiary_id
+          booleanExpressionType: int_bool_exp
+        - fieldName: beneficiary_name
+          booleanExpressionType: string_bool_exp
+        - fieldName: originator_address
+          booleanExpressionType: string_bool_exp
+        - fieldName: originator_id
+          booleanExpressionType: int_bool_exp
+        - fieldName: originator_name
+          booleanExpressionType: string_bool_exp
+        - fieldName: transaction_date
+          booleanExpressionType: string_bool_exp
+        - fieldName: transaction_id
+          booleanExpressionType: int_bool_exp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: aml_cases_bool_exp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: aml_cases_agg_exp
+  operand:
+    object:
+      aggregatedType: aml_cases
+      aggregatableFields:
+        - fieldName: id
+          aggregateExpression: object_id_agg_exp
+        - fieldName: amount
+          aggregateExpression: double_agg_exp
+        - fieldName: beneficiary_address
+          aggregateExpression: string_agg_exp
+        - fieldName: beneficiary_id
+          aggregateExpression: int_agg_exp
+        - fieldName: beneficiary_name
+          aggregateExpression: string_agg_exp
+        - fieldName: originator_address
+          aggregateExpression: string_agg_exp
+        - fieldName: originator_id
+          aggregateExpression: int_agg_exp
+        - fieldName: originator_name
+          aggregateExpression: string_agg_exp
+        - fieldName: transaction_date
+          aggregateExpression: string_agg_exp
+        - fieldName: transaction_id
+          aggregateExpression: int_agg_exp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: aml_cases_agg_exp
+  description: Aggregate expressions for aml_cases
+
+---
+kind: OrderByExpression
+version: v1
+definition:
+  name: aml_cases_aml_flags_pattern_metadata_order_by_exp
+  operand:
+    object:
+      orderedType: aml_cases_aml_flags_pattern_metadata
+      orderableFields:
+        - fieldName: avoidance_percentage
+          orderByExpression: float_64_order_by_exp
+        - fieldName: business_type
+          orderByExpression: string_order_by_exp_1
+        - fieldName: chain_length
+          orderByExpression: int_order_by_exp
+        - fieldName: hop_number
+          orderByExpression: int_order_by_exp
+        - fieldName: monthly_volume
+          orderByExpression: float_64_order_by_exp
+        - fieldName: network_id
+          orderByExpression: int_order_by_exp
+        - fieldName: pattern_id
+          orderByExpression: int_order_by_exp
+        - fieldName: pattern_type
+          orderByExpression: string_order_by_exp_1
+        - fieldName: threshold_avoided
+          orderByExpression: int_order_by_exp
+      orderableRelationships: []
+  graphql:
+    expressionTypeName: aml_cases_aml_flags_pattern_metadata_order_by_exp
+  description: Order by expressions for aml_cases_aml_flags_pattern_metadata
+
+---
+kind: OrderByExpression
+version: v1
+definition:
+  name: aml_cases_aml_flags_order_by_exp
+  operand:
+    object:
+      orderedType: aml_cases_aml_flags
+      orderableFields:
+        - fieldName: cross_border
+          orderByExpression: boolean_order_by_exp
+        - fieldName: darknet
+          orderByExpression: boolean_order_by_exp
+        - fieldName: pattern_metadata
+          orderByExpression: aml_cases_aml_flags_pattern_metadata_order_by_exp
+        - fieldName: structuring
+          orderByExpression: boolean_order_by_exp
+      orderableRelationships: []
+  graphql:
+    expressionTypeName: aml_cases_aml_flags_order_by_exp
+  description: Order by expressions for aml_cases_aml_flags
+
+---
+kind: OrderByExpression
+version: v1
+definition:
+  name: aml_cases_order_by_exp
+  operand:
+    object:
+      orderedType: aml_cases
+      orderableFields:
+        - fieldName: id
+          orderByExpression: string_order_by_exp
+        - fieldName: aml_flags
+          orderByExpression: aml_cases_aml_flags_order_by_exp
+        - fieldName: amount
+          orderByExpression: float_64_order_by_exp
+        - fieldName: beneficiary_address
+          orderByExpression: string_order_by_exp_1
+        - fieldName: beneficiary_id
+          orderByExpression: int_order_by_exp
+        - fieldName: beneficiary_name
+          orderByExpression: string_order_by_exp_1
+        - fieldName: originator_address
+          orderByExpression: string_order_by_exp_1
+        - fieldName: originator_id
+          orderByExpression: int_order_by_exp
+        - fieldName: originator_name
+          orderByExpression: string_order_by_exp_1
+        - fieldName: transaction_date
+          orderByExpression: string_order_by_exp_1
+        - fieldName: transaction_id
+          orderByExpression: int_order_by_exp
+      orderableRelationships: []
+  graphql:
+    expressionTypeName: aml_cases_order_by_exp
+  description: Order by expressions for aml_cases
+
+---
+kind: Model
+version: v2
+definition:
+  name: aml_cases
+  description: AML cases information
+  objectType: aml_cases
+  source:
+    dataConnectorName: mymongodb
+    collection: aml_cases
+  filterExpressionType: aml_cases_bool_exp
+  aggregateExpression: aml_cases_agg_exp
+  orderByExpression: aml_cases_order_by_exp
+  graphql:
+    selectMany:
+      queryRootField: aml_cases
+      subscription:
+        rootField: aml_cases
+    selectUniques:
+      - queryRootField: aml_cases_by_id
+        uniqueIdentifier:
+          - id
+        subscription:
+          rootField: aml_cases_by_id
+    filterInputTypeName: aml_cases_filter_input
+    aggregate:
+      queryRootField: aml_cases_aggregate
+      subscription:
+        rootField: aml_cases_aggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: aml_cases
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+

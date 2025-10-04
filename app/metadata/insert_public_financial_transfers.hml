@@ -1,0 +1,139 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: public_financial_transfers_insert_input
+  description: Input type for inserting into public.financial_transfers
+  fields:
+    - name: amount
+      type: bigdecimal
+      description: New value for public.financial_transfers.amount
+    - name: date
+      type: date
+      description: New value for public.financial_transfers.date
+    - name: is_laundering
+      type: boolean
+      description: New value for public.financial_transfers.is_laundering
+    - name: laundering_type
+      type: string
+      description: New value for public.financial_transfers.laundering_type
+    - name: payment_currency
+      type: string
+      description: New value for public.financial_transfers.payment_currency
+    - name: payment_type
+      type: string
+      description: New value for public.financial_transfers.payment_type
+    - name: received_currency
+      type: string
+      description: New value for public.financial_transfers.received_currency
+    - name: receiver_account
+      type: int_32
+      description: New value for public.financial_transfers.receiver_account
+    - name: receiver_bank_location
+      type: string
+      description: New value for public.financial_transfers.receiver_bank_location
+    - name: sender_account
+      type: int_32
+      description: New value for public.financial_transfers.sender_account
+    - name: sender_bank_location
+      type: string
+      description: New value for public.financial_transfers.sender_bank_location
+    - name: time
+      type: string
+      description: New value for public.financial_transfers.time
+    - name: transaction_id
+      type: int_32!
+      description: New value for public.financial_transfers.transaction_id
+  graphql:
+    typeName: public_financial_transfers_insert_input
+    inputTypeName: public_financial_transfers_insert_input_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mypostgres_promptql
+      dataConnectorObjectType: public.financial_transfers_insert_input
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: public_financial_transfers_insert_input
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - amount
+          - date
+          - is_laundering
+          - laundering_type
+          - payment_currency
+          - payment_type
+          - received_currency
+          - receiver_account
+          - receiver_bank_location
+          - sender_account
+          - sender_bank_location
+          - time
+          - transaction_id
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: insert_public_financial_transfers_result
+  description: insert from public.financial_transfers result
+  fields:
+    - name: affected_rows
+      type: int_32!
+      description: Number of affected rows
+    - name: returning
+      type: "[public_financial_transfers!]!"
+      description: Objects that were affected by insert
+  graphql:
+    typeName: insert_public_financial_transfers_result
+    inputTypeName: insert_public_financial_transfers_result_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mypostgres_promptql
+      dataConnectorObjectType: insert_public.financial_transfers_result
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: insert_public_financial_transfers_result
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affected_rows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: insert_public_financial_transfers
+  outputType: insert_public_financial_transfers_result!
+  arguments:
+    - name: objects
+      type: "[public_financial_transfers_insert_input!]!"
+      description: Objects to insert
+    - name: returning
+      type: "[string!]"
+      description: Fields to return
+  source:
+    dataConnectorName: mypostgres_promptql
+    dataConnectorCommand:
+      procedure: insert_public.financial_transfers
+  graphql:
+    rootFieldName: insert_public_financial_transfers
+    rootFieldKind: Mutation
+  description: Insert into public.financial_transfers
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: insert_public_financial_transfers
+  permissions:
+    - role: admin
+      allowExecution: true
+

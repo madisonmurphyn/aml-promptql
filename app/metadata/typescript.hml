@@ -1,0 +1,272 @@
+kind: DataConnectorLink
+version: v1
+definition:
+  name: typescript
+  url:
+    readWriteUrls:
+      read:
+        valueFromEnv: APP_TYPESCRIPT_READ_URL
+      write:
+        valueFromEnv: APP_TYPESCRIPT_WRITE_URL
+  headers:
+    Authorization:
+      valueFromEnv: APP_TYPESCRIPT_AUTHORIZATION_HEADER
+  schema:
+    version: v0.2
+    schema:
+      collections: []
+      functions: []
+      object_types:
+        BulkCheckResponse:
+          fields:
+            error:
+              type:
+                type: nullable
+                underlying_type:
+                  name: String
+                  type: named
+            flaggedCount:
+              type:
+                name: Float
+                type: named
+            results:
+              type:
+                element_type:
+                  name: CustomerCheckResponse
+                  type: named
+                type: array
+            success:
+              type:
+                name: Boolean
+                type: named
+            summary:
+              type:
+                name: BulkCheckSummary
+                type: named
+            totalChecked:
+              type:
+                name: Float
+                type: named
+          foreign_keys: {}
+        BulkCheckSummary:
+          fields:
+            clear:
+              type:
+                name: Float
+                type: named
+            critical:
+              type:
+                name: Float
+                type: named
+            unknown:
+              type:
+                name: Float
+                type: named
+          foreign_keys: {}
+        CustomerCheckResponse:
+          fields:
+            customerName:
+              type:
+                name: String
+                type: named
+            error:
+              type:
+                type: nullable
+                underlying_type:
+                  name: String
+                  type: named
+            isSDN:
+              type:
+                type: nullable
+                underlying_type:
+                  name: Boolean
+                  type: named
+            matchCount:
+              type:
+                name: Float
+                type: named
+            matches:
+              type:
+                element_type:
+                  name: SdnRecord
+                  type: named
+                type: array
+            riskLevel:
+              type:
+                name: String
+                type: named
+          foreign_keys: {}
+        SdnDataResponse:
+          fields:
+            count:
+              type:
+                name: Float
+                type: named
+            data:
+              type:
+                element_type:
+                  name: SdnRecord
+                  type: named
+                type: array
+            error:
+              type:
+                type: nullable
+                underlying_type:
+                  name: String
+                  type: named
+            success:
+              type:
+                name: Boolean
+                type: named
+          foreign_keys: {}
+        SdnRecord:
+          description: |-
+            SDN (Specially Designated Nationals) API Integration
+            Connects OFAC sanctions data to Aurelia Bank's AML supergraph
+          fields:
+            addresses:
+              type:
+                name: String
+                type: named
+            aliases:
+              type:
+                name: String
+                type: named
+            birth_date:
+              type:
+                name: String
+                type: named
+            countries:
+              type:
+                name: String
+                type: named
+            dataset:
+              type:
+                name: String
+                type: named
+            emails:
+              type:
+                name: String
+                type: named
+            first_seen:
+              type:
+                name: String
+                type: named
+            id:
+              type:
+                name: String
+                type: named
+            identifiers:
+              type:
+                name: String
+                type: named
+            last_change:
+              type:
+                name: String
+                type: named
+            last_seen:
+              type:
+                name: String
+                type: named
+            name:
+              type:
+                name: String
+                type: named
+            phones:
+              type:
+                name: String
+                type: named
+            sanctions:
+              type:
+                name: String
+                type: named
+            schema:
+              type:
+                name: String
+                type: named
+          foreign_keys: {}
+      procedures:
+        - arguments:
+            country:
+              type:
+                type: nullable
+                underlying_type:
+                  name: String
+                  type: named
+            limit:
+              type:
+                name: Float
+                type: named
+            name:
+              type:
+                type: nullable
+                underlying_type:
+                  name: String
+                  type: named
+          description: |-
+            Fetches SDN (Specially Designated Nationals) data from the custom API
+            This function queries sanctioned individuals and entities to help identify
+            potential AML risks in the bank's customer base
+          name: getSdnData
+          result_type:
+            name: SdnDataResponse
+            type: named
+        - arguments:
+            customerName:
+              type:
+                name: String
+                type: named
+            fuzzyMatch:
+              type:
+                name: Boolean
+                type: named
+          description: |-
+            Check if a customer name matches any SDN entries
+            Useful for real-time compliance checks during transaction processing
+          name: checkCustomerAgainstSdn
+          result_type:
+            name: CustomerCheckResponse
+            type: named
+        - arguments:
+            customerNames:
+              type:
+                element_type:
+                  name: String
+                  type: named
+                type: array
+          description: |-
+            Bulk check multiple customers against SDN list
+            Efficient for batch processing of customer base
+          name: bulkCheckSdn
+          result_type:
+            name: BulkCheckResponse
+            type: named
+      scalar_types:
+        Boolean:
+          aggregate_functions: {}
+          comparison_operators:
+            _eq:
+              type: equal
+          representation:
+            type: boolean
+        Float:
+          aggregate_functions: {}
+          comparison_operators:
+            _eq:
+              type: equal
+          representation:
+            type: float64
+        String:
+          aggregate_functions: {}
+          comparison_operators:
+            _eq:
+              type: equal
+          representation:
+            type: string
+    capabilities:
+      capabilities:
+        mutation: {}
+        query:
+          nested_fields: {}
+          variables: {}
+      version: 0.2.0

@@ -1,0 +1,35 @@
+kind: Subgraph
+version: v2
+definition:
+  name: app
+  generator:
+    rootPath: .
+    namingConvention: snake_case
+  includePaths:
+    - metadata
+  envMapping:
+    APP_MYMONGODB_AUTHORIZATION_HEADER:
+      fromEnv: APP_MYMONGODB_AUTHORIZATION_HEADER
+    APP_MYMONGODB_READ_URL:
+      fromEnv: APP_MYMONGODB_READ_URL
+    APP_MYMONGODB_WRITE_URL:
+      fromEnv: APP_MYMONGODB_WRITE_URL
+    APP_MYPOSTGRES_PROMPTQL_AUTHORIZATION_HEADER:
+      fromEnv: APP_MYPOSTGRES_PROMPTQL_AUTHORIZATION_HEADER
+    APP_MYPOSTGRES_PROMPTQL_READ_URL:
+      fromEnv: APP_MYPOSTGRES_PROMPTQL_READ_URL
+    APP_MYPOSTGRES_PROMPTQL_WRITE_URL:
+      fromEnv: APP_MYPOSTGRES_PROMPTQL_WRITE_URL
+    APP_TYPESCRIPT_AUTHORIZATION_HEADER:
+      fromEnv: APP_TYPESCRIPT_AUTHORIZATION_HEADER
+    APP_TYPESCRIPT_READ_URL:
+      fromEnv: APP_TYPESCRIPT_READ_URL
+    APP_TYPESCRIPT_WRITE_URL:
+      fromEnv: APP_TYPESCRIPT_WRITE_URL
+  connectors:
+    - path: connector/mymongodb/connector.yaml
+      connectorLinkName: mymongodb
+    - path: connector/mypostgres_promptql/connector.yaml
+      connectorLinkName: mypostgres_promptql
+    - path: connector/typescript/connector.yaml
+      connectorLinkName: typescript

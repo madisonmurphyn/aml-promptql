@@ -1,0 +1,63 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: delete_public_financial_transfers_result
+  description: delete from public.financial_transfers result
+  fields:
+    - name: affected_rows
+      type: int_32!
+      description: Number of affected rows
+    - name: returning
+      type: "[public_financial_transfers!]!"
+      description: Objects that were affected by delete
+  graphql:
+    typeName: delete_public_financial_transfers_result
+    inputTypeName: delete_public_financial_transfers_result_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mypostgres_promptql
+      dataConnectorObjectType: delete_public.financial_transfers_result
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: delete_public_financial_transfers_result
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affected_rows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: delete_public_financial_transfers
+  outputType: delete_public_financial_transfers_result!
+  arguments:
+    - name: returning
+      type: "[string!]"
+      description: Fields to return
+    - name: where
+      type: public_financial_transfers_bool_exp!
+      description: Filter for rows to delete
+  source:
+    dataConnectorName: mypostgres_promptql
+    dataConnectorCommand:
+      procedure: delete_public.financial_transfers
+  graphql:
+    rootFieldName: delete_public_financial_transfers
+    rootFieldKind: Mutation
+  description: Delete from public.financial_transfers
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: delete_public_financial_transfers
+  permissions:
+    - role: admin
+      allowExecution: true
+

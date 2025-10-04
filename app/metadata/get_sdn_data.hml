@@ -1,0 +1,140 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: sdn_record
+  description: |-
+    SDN (Specially Designated Nationals) API Integration
+    Connects OFAC sanctions data to Aurelia Bank's AML supergraph
+  fields:
+    - name: addresses
+      type: String!
+    - name: aliases
+      type: String!
+    - name: birth_date
+      type: String!
+    - name: countries
+      type: String!
+    - name: dataset
+      type: String!
+    - name: emails
+      type: String!
+    - name: first_seen
+      type: String!
+    - name: id
+      type: String!
+    - name: identifiers
+      type: String!
+    - name: last_change
+      type: String!
+    - name: last_seen
+      type: String!
+    - name: name
+      type: String!
+    - name: phones
+      type: String!
+    - name: sanctions
+      type: String!
+    - name: schema
+      type: String!
+  graphql:
+    typeName: sdn_record
+    inputTypeName: sdn_record_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: typescript
+      dataConnectorObjectType: SdnRecord
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: sdn_record
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - addresses
+          - aliases
+          - birth_date
+          - countries
+          - dataset
+          - emails
+          - first_seen
+          - id
+          - identifiers
+          - last_change
+          - last_seen
+          - name
+          - phones
+          - sanctions
+          - schema
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: sdn_data_response
+  fields:
+    - name: count
+      type: Float!
+    - name: data
+      type: "[sdn_record!]!"
+    - name: error
+      type: String
+    - name: success
+      type: Boolean!
+  graphql:
+    typeName: sdn_data_response
+    inputTypeName: sdn_data_response_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: typescript
+      dataConnectorObjectType: SdnDataResponse
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: sdn_data_response
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - count
+          - data
+          - error
+          - success
+
+---
+kind: Command
+version: v1
+definition:
+  name: get_sdn_data
+  outputType: sdn_data_response!
+  arguments:
+    - name: country
+      type: String
+    - name: limit
+      type: Float!
+    - name: name
+      type: String
+  source:
+    dataConnectorName: typescript
+    dataConnectorCommand:
+      procedure: getSdnData
+  graphql:
+    rootFieldName: get_sdn_data
+    rootFieldKind: Mutation
+  description: |-
+    Fetches SDN (Specially Designated Nationals) data from the custom API
+    This function queries sanctioned individuals and entities to help identify
+    potential AML risks in the bank's customer base
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: get_sdn_data
+  permissions:
+    - role: admin
+      allowExecution: true
+

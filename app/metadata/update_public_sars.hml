@@ -1,0 +1,142 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: timestamp_without_time_zone_set_input
+  description: Wrapper for setting scalar timestamp_without_time_zone
+  fields:
+    - name: value
+      type: timestamp
+      description: New value for scalar timestamp_without_time_zone
+  graphql:
+    typeName: timestamp_without_time_zone_set_input
+    inputTypeName: timestamp_without_time_zone_set_input_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mypostgres_promptql
+      dataConnectorObjectType: timestamp_without_time_zone_set_input
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: timestamp_without_time_zone_set_input
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - value
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: public_sars_set_input
+  description: Input type for updating public.sars
+  fields:
+    - name: customer_id
+      type: integer_set_input
+      description: New value wrapper for public.sars.customer_id
+    - name: filed_date
+      type: timestamp_without_time_zone_set_input
+      description: New value wrapper for public.sars.filed_date
+    - name: reason
+      type: text_set_input
+      description: New value wrapper for public.sars.reason
+    - name: sar_id
+      type: integer_set_input
+      description: New value wrapper for public.sars.sar_id
+    - name: status
+      type: character_varying_set_input
+      description: New value wrapper for public.sars.status
+    - name: transaction_id
+      type: integer_set_input
+      description: New value wrapper for public.sars.transaction_id
+  graphql:
+    typeName: public_sars_set_input
+    inputTypeName: public_sars_set_input_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mypostgres_promptql
+      dataConnectorObjectType: public.sars_set_input
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: public_sars_set_input
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - customer_id
+          - filed_date
+          - reason
+          - sar_id
+          - status
+          - transaction_id
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: update_public_sars_result
+  description: update from public.sars result
+  fields:
+    - name: affected_rows
+      type: int_32!
+      description: Number of affected rows
+    - name: returning
+      type: "[public_sars!]!"
+      description: Objects that were affected by update
+  graphql:
+    typeName: update_public_sars_result
+    inputTypeName: update_public_sars_result_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mypostgres_promptql
+      dataConnectorObjectType: update_public.sars_result
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: update_public_sars_result
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affected_rows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: update_public_sars
+  outputType: update_public_sars_result!
+  arguments:
+    - name: returning
+      type: "[string!]"
+      description: Fields to return
+    - name: set
+      type: public_sars_set_input!
+      description: Values to set
+    - name: where
+      type: public_sars_bool_exp!
+      description: Filter for rows to update
+  source:
+    dataConnectorName: mypostgres_promptql
+    dataConnectorCommand:
+      procedure: update_public.sars
+  graphql:
+    rootFieldName: update_public_sars
+    rootFieldKind: Mutation
+  description: Update public.sars
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: update_public_sars
+  permissions:
+    - role: admin
+      allowExecution: true
+

@@ -1,0 +1,123 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: public_customers_insert_input
+  description: Input type for inserting into public.customers
+  fields:
+    - name: account
+      type: int_32!
+      description: New value for public.customers.account
+    - name: address
+      type: string
+      description: New value for public.customers.address
+    - name: blacklisted
+      type: boolean
+      description: New value for public.customers.blacklisted
+    - name: customer_id
+      type: int_32!
+      description: New value for public.customers.customer_id
+    - name: dob
+      type: date
+      description: New value for public.customers.dob
+    - name: name
+      type: string!
+      description: New value for public.customers.name
+    - name: nationality
+      type: string
+      description: New value for public.customers.nationality
+    - name: pep_status
+      type: boolean
+      description: New value for public.customers.pep_status
+    - name: risk_level
+      type: string
+      description: New value for public.customers.risk_level
+  graphql:
+    typeName: public_customers_insert_input
+    inputTypeName: public_customers_insert_input_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mypostgres_promptql
+      dataConnectorObjectType: public.customers_insert_input
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: public_customers_insert_input
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - account
+          - address
+          - blacklisted
+          - customer_id
+          - dob
+          - name
+          - nationality
+          - pep_status
+          - risk_level
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: insert_public_customers_result
+  description: insert from public.customers result
+  fields:
+    - name: affected_rows
+      type: int_32!
+      description: Number of affected rows
+    - name: returning
+      type: "[public_customers!]!"
+      description: Objects that were affected by insert
+  graphql:
+    typeName: insert_public_customers_result
+    inputTypeName: insert_public_customers_result_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mypostgres_promptql
+      dataConnectorObjectType: insert_public.customers_result
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: insert_public_customers_result
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affected_rows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: insert_public_customers
+  outputType: insert_public_customers_result!
+  arguments:
+    - name: objects
+      type: "[public_customers_insert_input!]!"
+      description: Objects to insert
+    - name: returning
+      type: "[string!]"
+      description: Fields to return
+  source:
+    dataConnectorName: mypostgres_promptql
+    dataConnectorCommand:
+      procedure: insert_public.customers
+  graphql:
+    rootFieldName: insert_public_customers
+    rootFieldKind: Mutation
+  description: Insert into public.customers
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: insert_public_customers
+  permissions:
+    - role: admin
+      allowExecution: true
+

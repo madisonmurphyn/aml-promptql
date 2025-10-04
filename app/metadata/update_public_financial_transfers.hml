@@ -1,0 +1,170 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: decimal_set_input
+  description: Wrapper for setting scalar decimal
+  fields:
+    - name: value
+      type: bigdecimal
+      description: New value for scalar decimal
+  graphql:
+    typeName: decimal_set_input
+    inputTypeName: decimal_set_input_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mypostgres_promptql
+      dataConnectorObjectType: decimal_set_input
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: decimal_set_input
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - value
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: public_financial_transfers_set_input
+  description: Input type for updating public.financial_transfers
+  fields:
+    - name: amount
+      type: decimal_set_input
+      description: New value wrapper for public.financial_transfers.amount
+    - name: date
+      type: date_set_input
+      description: New value wrapper for public.financial_transfers.date
+    - name: is_laundering
+      type: boolean_set_input
+      description: New value wrapper for public.financial_transfers.is_laundering
+    - name: laundering_type
+      type: character_varying_set_input
+      description: New value wrapper for public.financial_transfers.laundering_type
+    - name: payment_currency
+      type: character_varying_set_input
+      description: New value wrapper for public.financial_transfers.payment_currency
+    - name: payment_type
+      type: character_varying_set_input
+      description: New value wrapper for public.financial_transfers.payment_type
+    - name: received_currency
+      type: character_varying_set_input
+      description: New value wrapper for public.financial_transfers.received_currency
+    - name: receiver_account
+      type: integer_set_input
+      description: New value wrapper for public.financial_transfers.receiver_account
+    - name: receiver_bank_location
+      type: character_varying_set_input
+      description: New value wrapper for public.financial_transfers.receiver_bank_location
+    - name: sender_account
+      type: integer_set_input
+      description: New value wrapper for public.financial_transfers.sender_account
+    - name: sender_bank_location
+      type: character_varying_set_input
+      description: New value wrapper for public.financial_transfers.sender_bank_location
+    - name: time
+      type: character_varying_set_input
+      description: New value wrapper for public.financial_transfers.time
+    - name: transaction_id
+      type: integer_set_input
+      description: New value wrapper for public.financial_transfers.transaction_id
+  graphql:
+    typeName: public_financial_transfers_set_input
+    inputTypeName: public_financial_transfers_set_input_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mypostgres_promptql
+      dataConnectorObjectType: public.financial_transfers_set_input
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: public_financial_transfers_set_input
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - amount
+          - date
+          - is_laundering
+          - laundering_type
+          - payment_currency
+          - payment_type
+          - received_currency
+          - receiver_account
+          - receiver_bank_location
+          - sender_account
+          - sender_bank_location
+          - time
+          - transaction_id
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: update_public_financial_transfers_result
+  description: update from public.financial_transfers result
+  fields:
+    - name: affected_rows
+      type: int_32!
+      description: Number of affected rows
+    - name: returning
+      type: "[public_financial_transfers!]!"
+      description: Objects that were affected by update
+  graphql:
+    typeName: update_public_financial_transfers_result
+    inputTypeName: update_public_financial_transfers_result_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: mypostgres_promptql
+      dataConnectorObjectType: update_public.financial_transfers_result
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: update_public_financial_transfers_result
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affected_rows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: update_public_financial_transfers
+  outputType: update_public_financial_transfers_result!
+  arguments:
+    - name: returning
+      type: "[string!]"
+      description: Fields to return
+    - name: set
+      type: public_financial_transfers_set_input!
+      description: Values to set
+    - name: where
+      type: public_financial_transfers_bool_exp!
+      description: Filter for rows to update
+  source:
+    dataConnectorName: mypostgres_promptql
+    dataConnectorCommand:
+      procedure: update_public.financial_transfers
+  graphql:
+    rootFieldName: update_public_financial_transfers
+    rootFieldKind: Mutation
+  description: Update public.financial_transfers
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: update_public_financial_transfers
+  permissions:
+    - role: admin
+      allowExecution: true
+
