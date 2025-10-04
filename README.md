@@ -48,7 +48,7 @@ Before running project, ensure you have:
 
 1. **Clone repository**:
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/madisonmurphyn/aml-promptql.git
 cd my-project
 ```
 2. **Install dependencies**:
