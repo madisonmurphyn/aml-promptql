@@ -126,23 +126,7 @@ ddn supergraph build create
 
 **Question**: Find customers with PEP status from sanctioned countries and order them by risk
 
-**Finding**: 
-- 7 individuals are from sanctioned jurisdictions (like Iran)
-- 2 customers are from jurisdictions requiring Enhanced Due Diligence (Russia/China)
-- 1 customer has previous SAR filings
-- None of these high-risk PEPs show transaction activity in the last 6 months, which could either indicate dormant accounts or could itself be a risk indicator
-
-These customers warrant enhanced monitoring due to their combined risk factors of:
-- High-risk classification
-- PEP status
-- Presence in sanctioned or high-risk jurisdictions
-- History of suspicious activity reports (for one customer)
-
-Recommendations:
-
-Enhanced due diligence on Laura Miller given the recent SAR filing
-Review transaction patterns of PEPs from high-risk jurisdictions like Cuba
-Additional scrutiny on corporate PEP accounts due to their higher complexity
+**Finding**: 24 PEP customers from sanctioned countries have been identified
 
 **Business Impact**: Identifies the most critical compliance failures - PEPs who are also sanctioned but weren't flagged.
 
