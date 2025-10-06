@@ -96,7 +96,7 @@ ddn supergraph build create
 ## Key Insights Delivered
 
 ### Insight 1: Automated SDN Screening Reduces Investigation Backlog
-**Thread**: https://promptql.console.hasura.io/project/crucial-oyster-4778/build/5c71e352d5/promptql-playground/thread/01a6500c-7967-45a3-904a-416737de13a4?artifact=aml_cases_viz&artifact=monthly_trend
+**Thread**: https://promptql.console.hasura.io/project/crucial-oyster-4778/promptql-playground/thread/63950c5b-48d2-4fd9-bbe2-ca513b1b0f30?artifact=aml_cases_summary&artifact=aml_cases_trend
 
 **Question**: How many AML cases have been opened over the last year? 
 
@@ -111,7 +111,7 @@ ddn supergraph build create
 ---
 
 ### Insight 2: Geographic Risk Patterns - Sanctioned Country Exposure
-**Thread**: https://promptql.console.hasura.io/project/crucial-oyster-4778/build/5c71e352d5/promptql-playground/thread/ee950337-f6b9-4dd5-b486-630811d77104?artifact=overlapping_countries
+**Thread**: https://promptql.console.hasura.io/project/crucial-oyster-4778/promptql-playground/thread/ec7a9908-14a6-4345-a234-8aaab95cdb9f?artifact=matching_countries
 
 **Question**: Which countries appear in both our transaction data and SDN sanctions lists?
 
@@ -122,7 +122,7 @@ ddn supergraph build create
 ---
 
 ### Insight 3: PEP + Sanctions Cross-Reference Compliance Gaps
-**Thread**: https://promptql.console.hasura.io/project/crucial-oyster-4778/build/5c71e352d5/promptql-playground/thread/b79b4d70-ac5f-4e1b-9221-9891ec1ce071?artifact=high_risk_sanctioned_peps
+**Thread**: https://promptql.console.hasura.io/project/crucial-oyster-4778/promptql-playground/thread/dfd17ee6-61ac-4d06-b0a2-2b53e1c4c654?artifact=high_risk_sanctioned_peps
 
 **Question**: Find customers with PEP status from sanctioned countries who are considered high risk
 
@@ -137,6 +137,12 @@ These customers warrant enhanced monitoring due to their combined risk factors o
 - PEP status
 - Presence in sanctioned or high-risk jurisdictions
 - History of suspicious activity reports (for one customer)
+
+Recommendations:
+
+Enhanced due diligence on Laura Miller given the recent SAR filing
+Review transaction patterns of PEPs from high-risk jurisdictions like Cuba
+Additional scrutiny on corporate PEP accounts due to their higher complexity
 
 **Business Impact**: Identifies the most critical compliance failures - PEPs who are also sanctioned but weren't flagged.
 
