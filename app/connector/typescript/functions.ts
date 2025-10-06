@@ -59,19 +59,21 @@ interface BulkCheckResponse {
  * potential AML risks in the bank's customer base
  */
 export async function getSdnData(
-  name?: string,
-  country?: string,
-  limit: number = 100
+  name?: string
 ): Promise<SdnDataResponse> {
   const API_BASE_URL = process.env.SDN_API_URL || 'https://sdn-api-w7wr.onrender.com';
   
+  if (!name) {
+    return {
+      success: false,
+      error: 'Name parameter is required',
+      data: [],
+      count: 0,
+    };
+  }
+  
   try {
-    const params = new URLSearchParams();
-    if (name) params.append('name', name);
-    if (country) params.append('country', country);
-    if (limit) params.append('limit', limit.toString());
-    
-    const url = `${API_BASE_URL}/getsdn?${params.toString()}`;
+    const url = `${API_BASE_URL}/getsdn?name=${encodeURIComponent(name)}`;
     
     const response = await fetch(url, {
       method: 'GET',

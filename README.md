@@ -33,7 +33,7 @@ Each subgraph contains:
 ### PromptQL Integration
 The SDN data is integrated via three TypeScript lambda functions:
 
-1. **`getSdnData`** - Retrieves SDN records by name or country
+1. **`getSdnData`** - Retrieves SDN records by name
 2. **`checkCustomerAgainstSdn`** - Validates individual customers against sanctions list
 3. **`bulkCheckSdn`** - Batch screening for portfolio-wide compliance reviews
 
@@ -96,18 +96,22 @@ ddn supergraph build create
 ## Key Insights Delivered
 
 ### Insight 1: Automated SDN Screening Reduces Investigation Backlog
-**Thread**: https://promptql.console.hasura.io/project/crucial-oyster-4778/promptql-playground/thread/1d1e7653-1077-45d7-98e9-004fb9a7d437
+**Thread**: https://promptql.console.hasura.io/project/crucial-oyster-4778/build/5c71e352d5/promptql-playground/thread/01a6500c-7967-45a3-904a-416737de13a4?artifact=aml_cases_viz&artifact=monthly_trend
 
-**Question**: "How many pending AML investigations involve customers from high-risk sanctioned countries?"
+**Question**: How many AML cases have been opened over the last year? 
 
-**Finding**: Identified 462 pending cases involving sanctioned jurisdictions, allowing immediate prioritization of highest-risk investigations.
+**Finding**: Over the last 12 months (since October 2024), there have been 40,675 AML cases opened. Here's the breakdown:
+
+- 140 cases involved structuring activity
+- No cases were flagged for cross-border violations
+- No cases were flagged for darknet activity
 
 **Business Impact**: Reduces manual triage time and ensures regulatory deadlines are met for critical cases.
 
 ---
 
 ### Insight 2: Geographic Risk Patterns - Sanctioned Country Exposure
-**Thread**: https://promptql.console.hasura.io/project/crucial-oyster-4778/promptql-playground/thread/3ac5fc50-4f88-44ed-a85a-40a6f494866a?artifact=country_overlap_analysis
+**Thread**: https://promptql.console.hasura.io/project/crucial-oyster-4778/build/5c71e352d5/promptql-playground/thread/ee950337-f6b9-4dd5-b486-630811d77104?artifact=overlapping_countries
 
 **Question**: Which countries appear in both our transaction data and SDN sanctions lists?
 
@@ -118,13 +122,21 @@ ddn supergraph build create
 ---
 
 ### Insight 3: PEP + Sanctions Cross-Reference Compliance Gaps
-**Thread**: https://promptql.console.hasura.io/project/crucial-oyster-4778/promptql-playground/thread/c8ba06b0-af33-4798-a63f-785609ae5de1?artifact=high_risk_pep_detailed
+**Thread**: https://promptql.console.hasura.io/project/crucial-oyster-4778/build/5c71e352d5/promptql-playground/thread/b79b4d70-ac5f-4e1b-9221-9891ec1ce071?artifact=high_risk_sanctioned_peps
 
-**Question**: Find customers with PEP status from sanctioned countries who have high transaction volumes
+**Question**: Find customers with PEP status from sanctioned countries who are considered high risk
 
-**Finding**: Both customers are from Cuba
-- Jennifer Bryant
-- Samantha Smith DDS
+**Finding**: 
+- 7 individuals are from sanctioned jurisdictions (like Iran)
+- 2 customers are from jurisdictions requiring Enhanced Due Diligence (Russia/China)
+- 1 customer has previous SAR filings
+- None of these high-risk PEPs show transaction activity in the last 6 months, which could either indicate dormant accounts or could itself be a risk indicator
+
+These customers warrant enhanced monitoring due to their combined risk factors of:
+- High-risk classification
+- PEP status
+- Presence in sanctioned or high-risk jurisdictions
+- History of suspicious activity reports (for one customer)
 
 **Business Impact**: Identifies the most critical compliance failures - PEPs who are also sanctioned but weren't flagged.
 

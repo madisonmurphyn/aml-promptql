@@ -187,16 +187,6 @@ definition:
           foreign_keys: {}
       procedures:
         - arguments:
-            country:
-              type:
-                type: nullable
-                underlying_type:
-                  name: String
-                  type: named
-            limit:
-              type:
-                name: Float
-                type: named
             name:
               type:
                 type: nullable

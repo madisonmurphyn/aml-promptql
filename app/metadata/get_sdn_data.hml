@@ -111,10 +111,6 @@ definition:
   name: get_sdn_data
   outputType: sdn_data_response!
   arguments:
-    - name: country
-      type: String
-    - name: limit
-      type: Float!
     - name: name
       type: String
   source:
