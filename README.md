@@ -96,7 +96,7 @@ ddn supergraph build create
 ## Key Insights Delivered
 
 ### Insight 1: Automated SDN Screening Reduces Investigation Backlog
-**Thread**: https://promptql.console.hasura.io/project/crucial-oyster-4778/promptql-playground/thread/63950c5b-48d2-4fd9-bbe2-ca513b1b0f30?artifact=aml_cases_summary&artifact=aml_cases_trend
+**Thread**: https://promptql.console.hasura.io/project/crucial-oyster-4778/build/ec735118ff/promptql-playground/thread/271a9827-8056-4d33-abd1-71ce252d525e?artifact=aml_cases_summary
 
 **Question**: How many AML cases have been opened over the last year? 
 
@@ -111,7 +111,7 @@ ddn supergraph build create
 ---
 
 ### Insight 2: Geographic Risk Patterns - Sanctioned Country Exposure
-**Thread**: https://promptql.console.hasura.io/project/crucial-oyster-4778/promptql-playground/thread/ec7a9908-14a6-4345-a234-8aaab95cdb9f?artifact=matching_countries
+**Thread**: https://promptql.console.hasura.io/project/crucial-oyster-4778/build/ec735118ff/promptql-playground/thread/ea50dbd6-58eb-457e-9132-300d06e40cbc?artifact=overlapping_countries
 
 **Question**: Which countries appear in both our transaction data and SDN sanctions lists?
 
@@ -122,9 +122,9 @@ ddn supergraph build create
 ---
 
 ### Insight 3: PEP + Sanctions Cross-Reference Compliance Gaps
-**Thread**: https://promptql.console.hasura.io/project/crucial-oyster-4778/promptql-playground/thread/dfd17ee6-61ac-4d06-b0a2-2b53e1c4c654?artifact=high_risk_sanctioned_peps
+**Thread**: https://promptql.console.hasura.io/project/crucial-oyster-4778/build/ec735118ff/promptql-playground/thread/41b4bdbb-0e48-4585-ab1e-0cffececfbff?artifact=high_risk_peps
 
-**Question**: Find customers with PEP status from sanctioned countries who are considered high risk
+**Question**: Find customers with PEP status from sanctioned countries and order them by risk
 
 **Finding**: 
 - 7 individuals are from sanctioned jurisdictions (like Iran)
