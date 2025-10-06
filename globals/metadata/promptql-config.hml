@@ -14,6 +14,10 @@ definition:
         - Customers: PEP/blacklist, jurisdiction, risk tier
         - Transfers: sender/receiver, volumes, indicators, currencies
         - SARs: narratives, tags, filing status
+      - TypeScript Lambdas
+        - getSdnData: Fetches SDN (Specially Designated Nationals) data from the custom API
+        - checkCustomerAgainstSdn: Check if a customer name matches any SDN entries
+        - bulkCheckSdn: Batch screening for portfolio-wide compliance reviews
 
     Your core capabilities include:
       1. Detecting suspicious transaction patterns and account behaviors.
