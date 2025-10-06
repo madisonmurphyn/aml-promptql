@@ -95,29 +95,41 @@ ddn supergraph build create
 
 ## Key Insights Delivered
 
-### Insight 1: Automated SDN Screening Reduces Investigation Backlog
-**Thread**: https://promptql.console.hasura.io/project/crucial-oyster-4778/build/ec735118ff/promptql-playground/thread/271a9827-8056-4d33-abd1-71ce252d525e?artifact=aml_cases_summary
-
-**Question**: How many AML cases have been opened over the last year? 
-
-**Finding**: Over the last 12 months (since October 2024), there have been 40,675 AML cases opened. Here's the breakdown:
-
-- 140 cases involved structuring activity
-- No cases were flagged for cross-border violations
-- No cases were flagged for darknet activity
-
-**Business Impact**: Reduces manual triage time and ensures regulatory deadlines are met for critical cases.
-
----
-
-### Insight 2: Geographic Risk Patterns - Sanctioned Country Exposure
+### Insight 1: Automated Workflows 
 **Thread**: https://promptql.console.hasura.io/project/crucial-oyster-4778/build/ec735118ff/promptql-playground/thread/ea50dbd6-58eb-457e-9132-300d06e40cbc?artifact=overlapping_countries
 
 **Question**: Which countries appear in both our transaction data and SDN sanctions lists?
 
 **Finding**: 3 countries overlap, Cuba, Iran, and Russia
 
-**Business Impact**: Reveals hidden geographic risk concentrations they couldn't see before - this is their "darknet patterns, structuring" visibility gap.
+This is a significant compliance risk that requires immediate attention because:
+
+- We have active transactions involving Cuba, Iran, and Russia
+- These countries are subject to various sanctions programs
+- All transactions involving these jurisdictions require enhanced due diligence
+
+**Business Impact**: Reveals hidden geographic risk concentrations that would've taken a long time to identify before
+
+---
+
+### Insight 2: Emerging Laundering Techniques Identified
+**Thread**: https://promptql.console.hasura.io/project/crucial-oyster-4778/build/ec735118ff/promptql-playground/thread/59fe8686-d7e6-4dbb-afd9-8d22aa6e09f0?artifact=high_impact_sars&artifact=sar_impact_visualization
+
+**Question**: What types of SARs cause the greatest negative impact?
+
+**Finding**: Based on the analysis of SAR data, here are the key findings about highest-impact suspicious activities:
+
+1. Layering Activities:
+- Highest total suspicious amount at $11.9M across 93 SARs
+- Average transaction size of ~$128K
+- Primarily associated with low-risk customers, which is concerning as it suggests sophisticated concealment
+
+2. Integration Schemes:
+- Second highest impact with nearly $8M in suspicious transactions
+- Higher average transaction size (~$221K)
+- Notable maximum transaction size of $477K
+
+**Business Impact**: Clearly highlights key risk implications relating to previously low, or undetected, laundering techniques
 
 ---
 
